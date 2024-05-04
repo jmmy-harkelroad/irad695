@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Query Result</title>
+</head>
+<body>
+    <h1>MySQL Query Result</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Connect to MySQL database
+            $conn = new mysqli("localhost", "root", "changeme", "irad695");
+
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Perform MySQL query
+            $sql = "SELECT * FROM users";
+            $result = $conn->query($sql);
+
+            // Display query result
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row["id"] . "</td>";
+                    echo "<td>" . $row["name"] . "</td>";
+                    echo "<td>" . $row["email"] . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='3'>No results found</td></tr>";
+            }
+
+            // Close MySQL connection
+            $conn->close();
+            ?>
+        </tbody>
+    </table>
+</body>
+</html>
